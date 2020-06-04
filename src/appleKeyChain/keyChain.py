@@ -1,7 +1,7 @@
 import re
 import os
 
-def getpassword(service, account):
+def getPassword(service, account):
 
     def decode_hex(s):
         s = eval('"' + re.sub(r"(..)", r"\x\1", s) + '"')
@@ -26,9 +26,9 @@ def getpassword(service, account):
         else:
             return stringform
 
-def setpassword(service, account, password):
+def setPassword(service, account, password):
     cmd = 'security add-generic-password -U -a %s -s %s -p %s' % (
         account, service, password)
-    p = os.popen(cmd)
+    p = os.open(cmd)
     s = p.read()
     p.close()
