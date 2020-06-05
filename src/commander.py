@@ -1,4 +1,4 @@
-from command_enum import Command
+from command_enum import CommandDictionary
 from mode_enum import Mode
 
 from weather import Weather
@@ -21,6 +21,8 @@ class Commander:
         self.last_ans = None
 
     def input(self, msg):
+        commands = CommandDictionary.commandMap()
+
         # Проверка на команду смены мода
         if msg.startswith("/"):
             for mode in Mode:
@@ -37,11 +39,11 @@ class Commander:
 
         if self.now_mode == Mode.default:
             # Погода
-            if msg in Command.weather.value:
+            if msg in commands['weather'] :
                 return Weather.get_weather_today()
 
             # Топ аниме
-            if msg in Command.anime_top.value:
+            if msg in commands['top anime'] :
                 res = ""
                 top = Myanimelist.get_top()
                 for anime in top:

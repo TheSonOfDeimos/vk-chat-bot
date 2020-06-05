@@ -1,5 +1,6 @@
 from server import Server
 from appleKeyChain.keyChain import getPassword
+from command_enum import CommandDictionary
 
 def main():
     sicretName = 'vk_bot_token'
@@ -9,7 +10,6 @@ def main():
 
     server1 = Server(token, groupId, "server1")
     server1.start()
-
 
 if __name__ == '__main__':
     main()

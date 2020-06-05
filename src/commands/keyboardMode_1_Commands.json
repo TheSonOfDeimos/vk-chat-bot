@@ -4,14 +4,16 @@
     [{
       "action": {
         "type": "text",
-        "label": "top anime"
+        "label": "top anime",
+        "payload": ["top anime", "аниме", "Top anime"]
       },
       "color": "positive"
     },
       {
         "action": {
           "type": "text",
-          "label": "weather"
+          "label": "weather",
+          "payload": ["погода", "weather"]
         },
         "color": "positive"
       }]

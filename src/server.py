@@ -5,7 +5,9 @@ import vk_api.vk_api
 from vk_api.bot_longpoll import VkBotLongPoll
 from vk_api.bot_longpoll import VkBotEventType
 
-from commander import Commander
+from session import UserSession
+from configLoader import ConfigLoader
+
 
 
 class Server:
@@ -17,7 +19,7 @@ class Server:
         self.vk = vk_api.VkApi(token=api_token)
         self.long_poll = VkBotLongPoll(self.vk, group_id, wait=30)
         self.vk_api = self.vk.get_api()
-        self.users = {}
+        self.userSessions = {}
         
 
     def reduse_appeal(self, message):
@@ -38,12 +40,12 @@ class Server:
         return self.vk_api.messages.send(peer_id=send_id,
                                          message=message,
                                          random_id=random.randint(0, 2048),
-                                         keyboard=open("/Users/levkargalov/Documents/Projects/Programming/Python/vk-chat-bot/src/keyboards/default.json", "r", encoding="UTF-8").read())
+                                         keyboard=open(ConfigLoader.getKeyboard(), "r", encoding="UTF-8").read())
 
     def start(self):
         for event in self.long_poll.listen():
             if event.type == VkBotEventType.MESSAGE_NEW:
-                if event.message.from_id not in self.users:
-                    self.users[event.message.from_id] = Commander()
-                self.send_msg(event.message.peer_id, self.users[event.message.from_id].input(self.reduse_appeal(event.message.text)))
+                if event.message.from_id not in self.userSessions:
+                    self.userSessions[event.message.from_id] = UserSession(self.group_id, self.long_poll, self.vk_api)
+                self.send_msg(event.message.peer_id, self.userSessions[event.message.from_id].responce(event))
 

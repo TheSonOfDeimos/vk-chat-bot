@@ -1,7 +1,6 @@
 import requests
 import bs4
 
-
 class Myanimelist:
 
     @staticmethod
